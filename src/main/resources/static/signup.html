@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Daily UI 001 Sign Up Form</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.css'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="cssLog/style.css">
+
+  
+</head>
+
+<body>
+  <div class="signupSection" style="height:85vh;">
+  <div class="info">
+    <h2>Grocery Store</h2>
+    <i class="icon ion-ios-ionic-outline" aria-hidden="true"></i>
+    <p>The Future Is Here</p>
+  </div>
+  <form action="#" method="POST" class="signupForm" name="signupform">
+    <h2>Sign Up</h2>
+    <ul class="noBullet">
+      <li>
+        <label for="username"></label>
+        <input type="text" class="inputFields" id="username" name="username" placeholder="Username" value=""/>
+      </li>
+       <li>
+        <label for="email"></label>
+        <input type="email" class="inputFields" id="email" name="email" placeholder="Email" value=""/>
+      </li>
+      
+      <li>
+        <label for="password"></label>
+        <input type="password" class="inputFields" id="password" name="password" placeholder="Password"/>
+      </li>
+     <div id="sec"></div>
+      <li id="center-btn">
+        <input type="button" id="join-btn" alt="Join" value='sign up' onclick='todo();'>
+      </li>
+    </ul>
+            <p style="font-size:1.2rem!important;">Already have an account ? <a style="text-decoration:none;color:cyan;font-weight:700;" href="login.html">Sign In</a></p>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+    function todo(){
+    	var a = document.querySelector("#username").value;
+    	var b = validate();
+    	var c = document.querySelector("#password").value;
+    	if(a.length > 5 && b === true && c.length>= 8 ){
+    		postApi(this);
+    		window.location.replace('login.html');
+    	}
+    	else{
+    		if(a.length <= 5){
+    			document.querySelector("#sec").innerHTML = `<div style="color:white;background-color:#d95f6c;border: 2px solid red;width:22rem;margin-left:5rem;" class="alert alert-danger alert-dismissible fade show" role="alert">
+    				  <strong> The username is too short!</strong>
+    				</div>`;
+    		}
+    		else if(!b){
+    			document.querySelector("#sec").innerHTML = `<div style="color:white;background-color:#d95f6c;border: 2px solid red;width:22rem;margin-left:5rem;" class="alert alert-danger alert-dismissible fade show" role="alert">
+  				  <strong> This Email is Wrong!</strong>
+  				</div>`;
+  		}
+    		else {
+    			document.querySelector("#sec").innerHTML = `<div style="color:white;background-color:#d95f6c;border: 2px solid red;width:22rem;margin-left:5rem;" class="alert alert-danger alert-dismissible fade show" role="alert">
+    				  <strong> This Password is short , it must be above than 8 characters!</strong>
+    				</div>`;
+    		}
+    	}
+
+    }
+    function validateEmail(email) {
+    	  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	  return re.test(email);
+    }
+
+    	function validate() {
+    	  const email = document.querySelector("#email").value;
+    	  if (validateEmail(email)) 
+    	    return true;
+    	  return false;
+    	}
+    function postApi(val){
+	var model = {
+	"username": document.querySelector("#username").value,
+	"email": document.querySelector("#email").value,
+	"password" : document.querySelector("#password").value
+	};
+	console.log("post data:"+model);
+	$.ajax(
+	{
+		type:"POST",
+		url : "admin/addUser",//api
+		
+		ContentType:"application/json ;charset=UTF-8",
+		
+		crossOrigin:true,
+		dataType:"json",
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+			},
+		data:this.JSON.stringify(model),
+		
+		success:function(data)
+		{
+			alert("done");
+		},error:function(jqXHR,testStatus,errorThrown)
+		{
+			alert("error");
+		}
+	}
+	);
+}
+	</script>
+
+</body>
+</html>
